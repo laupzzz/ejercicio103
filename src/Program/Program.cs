@@ -1,27 +1,27 @@
-//------------------------------------------------------------------------------
-// <copyright file="Program.cs" company="Universidad Católica del Uruguay">
-//     Copyright (c) Programación II. Derechos reservados.
-// </copyright>
-//------------------------------------------------------------------------------
-
 using System;
-using Library;
+using Ucu.Poo.Biblioteca;
 
-namespace Project
+namespace Program
 {
-    /// <summary>
-    /// Programa principal.
-    /// </summary>
-    public static class Program
+    class Program
     {
-        /// <summary>
-        /// Punto de entrada al programa principal.
-        /// </summary>
-        public static void Main()
+        static void Main(string[] args)
         {
-            Train train = new Train();
-            train.StartEngines();
-            Console.WriteLine("Hello World!");
+            RegistroBiblioteca registro = RegistroBiblioteca.ObtenerInstancia();
+            registro.AgregarMaterial(new Libro{Titulo="C# Avanzado", CodigoIdentificador = "L001" });
+            registro.AgregarMaterial(new Libro{Titulo="Patrones de Diseño", CodigoIdentificador = "L002" });
+            registro.AgregarMaterial(new Revista{Titulo="Techcon", CodigoIdentificador = "R001" });
+            registro.AgregarMaterial(new DVD { Titulo ="Prog desde 0", CodigoIdentificador = "D001" });
+            InspectorMateriales inspector = new InspectorMateriales();
+            Console.WriteLine("=== INSPECCIÓN DE MATERIALES ===");
+            foreach (IMaterial material in registro.ObtenerMateriales())
+            {
+                material.Aceptar(inspector);
+            }
+            RegistroBiblioteca registro1 = RegistroBiblioteca.ObtenerInstancia();
+            RegistroBiblioteca registro2 = RegistroBiblioteca.ObtenerInstancia();
+            Console.WriteLine();
+            Console.WriteLine($"¿Es el mismo registro?: {registro1 == registro2}");
         }
     }
 }
